@@ -37,7 +37,6 @@ public class BookService {
         return new Pageable<>(resBookDtos, page, totalBooks % 10 == 0 ? totalBooks / 10 : (totalBooks / 10 + 1));
     }
 
-
     public BookDto getBookById(Long id) {
 //        Example 1
 //        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("not found"));
@@ -58,7 +57,6 @@ public class BookService {
         return bookWithComment;
     }
 
-
     public List<BookDtoWithAuthor> filterBookByAuthorOrISBN10(String isbn_10, String author) {
         if (StringUtils.hasText(isbn_10) && StringUtils.hasText(author))
             return bookRepository.findAllByAuthorNameAndISBN_10(author, isbn_10);
@@ -70,21 +68,18 @@ public class BookService {
         return new ArrayList<>();
     }
 
-    private BookDtoWithAuthorId convertToBookDto(Book book) {
-        return mapper.map(book, BookDtoWithAuthorId.class);
-    }
-
-    private CommentDto commentTOCommentDto(Comment comment) {
-        return mapper.map(comment, CommentDto.class);
-    }
-
     public BookDtoWithAuthorId saveBook(BookDtoWithAuthorId book) throws NotFoundException {
         if (!authorRepository.existsById(book.getAuthorId()))
             throw  new NotFoundException("Author not found");
         Book bookEntity = mapper.map(book, Book.class);
         bookRepository.save(bookEntity);
         return mapper.map(bookEntity, BookDtoWithAuthorId.class);
+    }
+    private BookDtoWithAuthorId convertToBookDto(Book book) {
+        return mapper.map(book, BookDtoWithAuthorId.class);
+    }
 
-
+    private CommentDto commentTOCommentDto(Comment comment) {
+        return mapper.map(comment, CommentDto.class);
     }
 }

@@ -29,9 +29,6 @@ public class AuthorService {
         return authorRepository.findAll().stream().map(this::convertAuthorToDto).collect(Collectors.toList());
     }
 
-    private AuthorDto convertAuthorToDto(Author author) {
-        return mapper.map(author, AuthorDto.class);
-    }
 
     public AuthorDtoWithBook getAuthorByIdWithBook(Long id) {
         AuthorDtoWithBook author = mapper.map(authorRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found.")), AuthorDtoWithBook.class);
@@ -41,13 +38,18 @@ public class AuthorService {
 
 
     }
-    private BookDto BookToBookDto(Book book){
-        return mapper.map(book, BookDto.class);
-    }
 
     public AuthorDto saveAuthor(AuthorDto authorDto) {
         Author author = mapper.map(authorDto, Author.class);
         return mapper.map(authorRepository.save(author), AuthorDto.class);
 
+    }
+
+    private BookDto BookToBookDto(Book book) {
+        return mapper.map(book, BookDto.class);
+    }
+
+    private AuthorDto convertAuthorToDto(Author author) {
+        return mapper.map(author, AuthorDto.class);
     }
 }
