@@ -20,5 +20,5 @@ public class UserRatingDto {
     @Column(name = "book_count")
     private Long bookCount;
     @Column(name = "purchase_price")
-    private Long purchasePrice;
+    private Double purchasePrice;
 }
