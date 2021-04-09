@@ -5,10 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookDtoWithAuthorId extends BookDto {
-    private Long authorId;
+public class BookWithCommentDto extends BookDto {
+    private List<CommentDto> comments;
 }

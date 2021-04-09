@@ -3,7 +3,7 @@ package uz.java.demo.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import uz.java.demo.dto.AuthorDto;
-import uz.java.demo.dto.AuthorDtoWithBook;
+import uz.java.demo.dto.AuthorWithBookDto;
 import uz.java.demo.dto.BookDto;
 import uz.java.demo.entity.Author;
 import uz.java.demo.entity.Book;
@@ -30,8 +30,8 @@ public class AuthorService {
     }
 
 
-    public AuthorDtoWithBook getAuthorByIdWithBook(Long id) {
-        AuthorDtoWithBook author = mapper.map(authorRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found.")), AuthorDtoWithBook.class);
+    public AuthorWithBookDto getAuthorByIdWithBook(Long id) {
+        AuthorWithBookDto author = mapper.map(authorRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found.")), AuthorWithBookDto.class);
         List<BookDto> bookDtos = bookRepository.findAllByAuthorId(id).stream().map(this::BookToBookDto).collect(Collectors.toList());
         author.setBooks(bookDtos);
         return author;

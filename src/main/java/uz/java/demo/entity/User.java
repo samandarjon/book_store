@@ -9,16 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long bookId;
-    private String content;
 
-    private Long userId;
+    private String name;
+
 }

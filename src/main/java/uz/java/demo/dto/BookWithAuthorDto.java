@@ -6,10 +6,10 @@ import uz.java.demo.entity.Author;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BookDtoWithAuthor extends BookDto {
+public class BookWithAuthorDto extends BookDto {
     private AuthorDto authorDto;
 
-    public BookDtoWithAuthor(Author authorDto,
+    public BookWithAuthorDto(Author authorDto,
                              Long id, String name, Double price,
                              Double rate, Long categoryId, String filePath,
                              String ISBN_10, String description, Long languageId) {

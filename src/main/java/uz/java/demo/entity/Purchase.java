@@ -13,12 +13,12 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+public class Purchase {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long bookId;
-    private String content;
-
+    private double purchasePrice;
     private Long userId;
+
 }

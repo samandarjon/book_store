@@ -29,11 +29,11 @@ public class BookService {
         this.mapper = mapper;
     }
 
-    public Pageable<BookDtoWithAuthorId> getAllBook(Long page) {
+    public Pageable<BookWithAuthorIdDto> getAllBook(Long page) {
         page = page < 0 ? 1 : page;
         List<Book> books = bookRepository.findAllBook(10L, (page - 1) * 10);
         long totalBooks = bookRepository.count();
-        List<BookDtoWithAuthorId> resBookDtos = books.stream().map(this::convertToBookDto).collect(Collectors.toList());
+        List<BookWithAuthorIdDto> resBookDtos = books.stream().map(this::convertToBookDto).collect(Collectors.toList());
         return new Pageable<>(resBookDtos, page, totalBooks % 10 == 0 ? totalBooks / 10 : (totalBooks / 10 + 1));
     }
 
@@ -49,15 +49,15 @@ public class BookService {
 
     }
 
-    public BookDtoWithComment getBookByIdWithComment(Long id) {
+    public BookWithCommentDto getBookByIdWithComment(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
-        BookDtoWithComment bookWithComment = mapper.map(book, BookDtoWithComment.class);
+        BookWithCommentDto bookWithComment = mapper.map(book, BookWithCommentDto.class);
         List<Comment> bookComments = commentRepository.findAllByBookId(id);
         bookWithComment.setComments(bookComments.stream().map(this::commentTOCommentDto).collect(Collectors.toList()));
         return bookWithComment;
     }
 
-    public List<BookDtoWithAuthor> filterBookByAuthorOrISBN10(String isbn_10, String author) {
+    public List<BookWithAuthorDto> filterBookByAuthorOrISBN10(String isbn_10, String author) {
         if (StringUtils.hasText(isbn_10) && StringUtils.hasText(author))
             return bookRepository.findAllByAuthorNameAndISBN_10(author, isbn_10);
         if (StringUtils.hasText(author))
@@ -68,15 +68,15 @@ public class BookService {
         return new ArrayList<>();
     }
 
-    public BookDtoWithAuthorId saveBook(BookDtoWithAuthorId book) throws NotFoundException {
+    public BookWithAuthorIdDto saveBook(BookWithAuthorIdDto book) throws NotFoundException {
         if (!authorRepository.existsById(book.getAuthorId()))
             throw  new NotFoundException("Author not found");
         Book bookEntity = mapper.map(book, Book.class);
         bookRepository.save(bookEntity);
-        return mapper.map(bookEntity, BookDtoWithAuthorId.class);
+        return mapper.map(bookEntity, BookWithAuthorIdDto.class);
     }
-    private BookDtoWithAuthorId convertToBookDto(Book book) {
-        return mapper.map(book, BookDtoWithAuthorId.class);
+    private BookWithAuthorIdDto convertToBookDto(Book book) {
+        return mapper.map(book, BookWithAuthorIdDto.class);
     }
 
     private CommentDto commentTOCommentDto(Comment comment) {

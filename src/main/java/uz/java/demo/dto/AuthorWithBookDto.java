@@ -7,10 +7,10 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AuthorDtoWithBook extends AuthorDto {
+public class AuthorWithBookDto extends AuthorDto {
     private List<BookDto> books;
 
-    public AuthorDtoWithBook(Long id, String name, List<BookDto> books) {
+    public AuthorWithBookDto(Long id, String name, List<BookDto> books) {
         super(id, name);
         this.books = books;
     }
